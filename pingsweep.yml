@@ -1,0 +1,24 @@
+---
+## Template to perform a network ping sweep
+## Use this after the host file has been generated
+
+- name: Perform a ping sweep and show reachable devices
+  hosts: all
+  gather_facts: no
+  tasks:
+    - name: Perform ICMP ping using raw
+      raw: ping -c 1 -W 2 {{ inventory_hostname }}
+      register: ping_result
+      ignore_errors: yes
+      delegate_to: localhost  # Run this task on the control node
+      become: no  # Ensure no privilege escalation is used
+
+    - name: Write reachable devices to file
+      lineinfile:
+        path: "/home/ansible/scripts/pingsweepresults"
+        line: "{{ inventory_hostname }} is reachable"
+        create: yes
+        mode: '0655'
+      when: ping_result.rc == 0
+      delegate_to: localhost  # Run this task on the control node
+      become: no
