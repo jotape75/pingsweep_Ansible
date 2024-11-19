@@ -1,0 +1,14 @@
+---
+- name: Generate inventory file from template
+  hosts: localhost
+  gather_facts: no
+
+  tasks:
+    - name: Render Jinja2 template to hosts file
+      template:
+        src: /home/ansible/scripts/jinja2_template.j2 # Path to your Jinja2 template
+        dest: /home/ansible/scripts/hosts  # Path to save rendered inventory file
+
+    - name: Display generated inventory file
+      debug:
+        msg: "Inventory file generated successfully at /home/ansible/scripts/hosts"
