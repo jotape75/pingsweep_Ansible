@@ -1,4 +1,4 @@
-Simple script to perform a network range sweep in a network.
+Simple script to perform a network range sweep in a network using ansible and jinja2.
 
 Steps:
 
