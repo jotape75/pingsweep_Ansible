@@ -1,0 +1,5 @@
+## Jinja2 template to generate network IP ranges
+[network_hosts]
+{% for ip in range(1, 255) %}
+192.168.0.{{ ip }}
+{% endfor %}
